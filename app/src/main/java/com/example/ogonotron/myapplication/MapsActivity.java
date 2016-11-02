@@ -1,6 +1,8 @@
 package com.example.ogonotron.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,7 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -41,10 +46,7 @@ public class MapsActivity extends AppCompatActivity
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationRequest lr;
     static int count = 0;
-
     List<LatLng> llList;
-    Polyline line = null;
-
     private GoogleMap map;
     private GoogleApiClient gAPIc;
 
@@ -53,6 +55,12 @@ public class MapsActivity extends AppCompatActivity
         Log.i(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        //Toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.inflateMenu(R.menu.menu_activity_maps);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("yoyo");
 
         //Obtain the SupportMapFragment and call onMapReady when it is ready to be used
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -74,6 +82,22 @@ public class MapsActivity extends AppCompatActivity
                 .setFastestInterval(1000)
                 .setMaxWaitTime(12000)
                 .setSmallestDisplacement(5);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            //startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
